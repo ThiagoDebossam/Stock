@@ -1,0 +1,28 @@
+{
+  "name": "stock",
+  "version": "1.0.0",
+  "description": "Projeto Stock",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThiagoDebossam/Stock.git"
+  },
+  "author": "ThiagoDebossam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThiagoDebossam/Stock/issues"
+  },
+  "homepage": "https://github.com/ThiagoDebossam/Stock#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "1.18.3",
+    "consign": "0.1.6",
+    "cors": "2.8.4",
+    "express": "4.16.3",
+    "jwt-simple": "0.5.1",
+    "moment": "2.22.2",
+    "mysql": "^2.18.1"
+}
