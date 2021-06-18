@@ -12,6 +12,7 @@ module.exports = app => {
             existsOrError(user.name, 'Nome não informado')
             existsOrError(user.email, 'E-mail não informado')
             existsOrError(user.password, 'Senha não informado')
+            existsOrError(user.user_id_prof, 'Informe o perfil do usuário')
             existsOrError(user.confirmPassword, 'Confirmação de senha inválida')
             equalsOrError(user.password, user.confirmPassword, 'Senhas não conferem')
         } catch (msg) {
@@ -36,5 +37,14 @@ module.exports = app => {
 
         userDAO.remove(app, res, id)
     }
-    return { save, remove }
+
+    const getUsers = (req, res) => {
+        if (req.body.userId) {
+            userDAO.getUsersById(app, res, req.body.userId)
+        } else {
+            userDAO.getUsers(app, req, res)
+        }
+    }
+
+    return { save, remove, getUsers }
 }
