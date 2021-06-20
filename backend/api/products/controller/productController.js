@@ -9,7 +9,26 @@ module.exports = app => {
         } catch (msg) {
             return res.status(500).send(msg)
         }
+        DAO.save(app, res, product)
     }
 
-    return { save }
+    const getProducts = (req, res) => {
+        if (req.body.productId) {
+            DAO.getProductsById(app, res, req.body.productId)
+        } else {
+            DAO.getProducts(app, res)
+        }
+    }
+
+    const remove = (req, res) => {
+        const id = req.body.productId
+        try {
+            existsOrError(id, 'Informe o ID do produto')
+        } catch (msg) {
+            return res.status(400).send(msg)
+        }
+        DAO.remove(app, res, id)
+    }
+
+    return { save, getProducts, remove }
 }

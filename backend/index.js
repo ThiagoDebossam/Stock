@@ -5,8 +5,10 @@ const   app     = require('express')()
 app.db = db
 
 consign()
-    .include('./config/validation.js')
+    .include('./config/passport.js')
+    .then('./config/validation.js')
     .then('./config/middlewares.js')
+    .then('./api/auth')
     .then('./api/user/controller')
     .then('./api/profile/controller')
     .then('./api/items/controller')
