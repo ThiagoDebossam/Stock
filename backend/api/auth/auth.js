@@ -12,7 +12,7 @@ module.exports = app => {
             const user = result ? result[0] : []
             if (!user) return res.status(400).send('Usuário não encontrado!')
             const isMatch = bcrypt.compareSync(req.body.password, user.password)
-            if (!isMatch) res.status(400).send('Senha incorreta')
+            if (!isMatch) return res.status(400).send('Senha incorreta')
 
             const now = Math.floor(Date.now() / 1000)
 
@@ -20,7 +20,7 @@ module.exports = app => {
                 id: user.id,
                 email: user.email,
                 iat: now,
-                exp: now + (60 * 60)
+                exp: now + (60 * 30)
             }
 
             res.json({...payload, token: jwt.encode(payload, authSecret)})
@@ -31,13 +31,13 @@ module.exports = app => {
         const userData = req.body || null
         try {
             if (userData) {
-                const tokne = jwt.decode(userData.token, authSecret)
-                if (new Date(token.exp * 1000 > new Date())) {
+                const token = jwt.decode(userData.token, authSecret)
+                if (new Date(token.exp * 1000) > new Date()) {
                     return res.send(true)
                 }
             }
         } catch {
-            res.send('Sessão expirada. Por favor faça login novamente')
+            res.status(500).send('Sessão expirada. Por favor faça login novamente')
         }
     }
 
