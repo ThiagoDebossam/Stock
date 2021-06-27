@@ -56,6 +56,7 @@ export default {
 					if (this.$route.path != '/') this.$router.push({path: '/'})
 				})
 				.catch(err => {
+					this.setLoading(false)
 					this.setLogin(false)
 					this.$message(err.response.data)
 					if (this.$route.path != '/login') this.$router.push({path: '/login'})
