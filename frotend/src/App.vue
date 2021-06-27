@@ -1,13 +1,10 @@
 <template>
 	<div>
 	<v-app :class="!isLogged ? 'login' : 'index'">
-		<template v-if="isLogged">
-			<v-app-bar>
-			</v-app-bar>
-			<router-view>
-			</router-view>
-		</template>
-		<template v-else>
+		<template>
+			<Header @toggleMenu="drawer = !drawer" v-if="isLogged" />
+			<Menu v-if="drawer" @toggleMenu="drawer = !drawer" :group="group"/>		
+			<moon-loader :loading="loading" :color="'#337ab7'" :size="'100px'"></moon-loader>
 			<router-view>
 			</router-view>
 		</template>
@@ -16,16 +13,36 @@
 </template>
 
 <script>
-
+import { mapGetters, mapActions } from 'vuex'
+import Header from './components/template/header/Header.vue'
+import Menu from './components/template/menu/Menu.vue'
 export default {
 	name: 'App',
+	components: {
+		Header,
+		Menu
+	},
 	data () {
 		return {
-			isLogged: false,
-			userSession: {}
+			userSession: {},
+			drawer: false,
+			group: null
 		}
 	},
+	computed: {
+		...mapGetters([
+            'loading',
+			'isLogged'
+        ])
+	},
+	methods: {
+		...mapActions([
+			'setLoading',
+			'setLogin'
+		])
+	},
 	created () {
+		this.setLoading(true)
 		if (sessionStorage.getItem('_session')) {
 			this.userSession = JSON.parse(sessionStorage.getItem('_session'))
 		} else {
@@ -34,21 +51,23 @@ export default {
 		if (this.userSession) {
 			this.$http.post('/token', this.userSession)
 				.then(() => {
-					this.isLogged = true
+					this.setLoading(false)
+					this.setLogin(true)
 					if (this.$route.path != '/') this.$router.push({path: '/'})
 				})
 				.catch(err => {
-					this.isLogged = false
+					this.setLogin(false)
 					this.$message(err.response.data)
 					if (this.$route.path != '/login') this.$router.push({path: '/login'})
 					sessionStorage.removeItem('_session')
 				})
 		} else {
+			this.setLoading(false)
+			this.setLogin(false)
 			if (this.$route.path != '/login') this.$router.push({path: '/login'})
 		}
 	},
 	mounted () {
-		// if (!this.isLogged && this.$route.path != '/login') this.$router.push({path: '/login'})
 	}
 }
 </script>

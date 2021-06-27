@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
 	name: 'Login',
 	data () {
@@ -54,16 +55,24 @@ export default {
 		if (sessionStorage.getItem('_session')) window.location.href = '/'
 	},
 	methods: {
+		...mapActions([
+			'setLoading',
+			'setLogin'
+		]),
 		submit () {
 			if (this.$refs.form.validate()) {
+				this.setLoading(true)
 				this.$http.post('signin', this.payload)
 					.then(res => {
+						this.setLogin(true)
 						this.$http.defaults.headers.common['Authorization'] = 'bearer ' + res.data.token
 						sessionStorage.setItem('_session', JSON.stringify(res.data))
-						window.location.href = '/'
+						this.$router.push({path: '/'})
+						this.setLoading(false)
 					})
 					.catch((err) => {
 						this.$message(err.response.data)
+						this.setLogin(false)
 					})
 			} else {
 				this.$message('Preencha todos os campos obrigatórios')
