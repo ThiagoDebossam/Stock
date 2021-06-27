@@ -22,7 +22,7 @@ module.exports = app => {
         if (req.body.idItem) {
             DAO.getItemsById(app, res, req.body.idItem)
         } else {
-            DAO.getItems(app, res)
+            DAO.getItems(app, res, req)
         }
     }
 

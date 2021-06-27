@@ -17,6 +17,10 @@ module.exports = app => {
         .post(app.api.items.controller.itemController.save)
         .get(app.api.items.controller.itemController.getItems)
         .delete(app.api.items.controller.itemController.remove)
+        
+    app.route('/itemsSearch')
+        .all(app.config.passport.authenticate())
+        .post(app.api.items.controller.itemController.getItems)
 
     app.route('/products')
         .all(app.config.passport.authenticate())

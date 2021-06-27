@@ -44,10 +44,18 @@ const remove = (app, res, id) => {
     })
 }
 
-const getItems = (app, res) => {
+const getItems = (app, res, req) => {
+    let where = req.body.productName ?  `WHERE product_name LIKE '%${req.body.productName}%'` : ''
     let query = `
-        SELECT * FROM items
+        SELECT
+            id_item AS idItem
+            , item_id_products AS itemIdProducts
+            , product_id AS productId
+            , product_name AS productName
+            , quantity AS quantity
+        FROM items
 	    INNER JOIN products ON product_id = item_id_products
+        ${where}
     `
     app.db.query(query, (err, result) => {
         if (err) {
