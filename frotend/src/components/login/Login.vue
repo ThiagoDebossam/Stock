@@ -71,6 +71,7 @@ export default {
 						this.setLoading(false)
 					})
 					.catch((err) => {
+						this.setLoading(false)
 						this.$message(err.response.data)
 						this.setLogin(false)
 					})

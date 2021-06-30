@@ -8,7 +8,7 @@
         >
             <v-app-bar-nav-icon @click="$emit('toggleMenu')"></v-app-bar-nav-icon>
 
-            <v-toolbar-title style="cursor: pointer" @click="$route.path != '/' ? $router.push({path: '/'}) : ''">Estoque +</v-toolbar-title>
+            <v-toolbar-title style="cursor: pointer" @click="$route.path != '/' ? $router.push({path: '/'}) : ''">Stoque Plus</v-toolbar-title>
 
             <v-spacer></v-spacer>
             <div class="text-center">

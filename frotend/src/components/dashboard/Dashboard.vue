@@ -35,7 +35,7 @@
 				</v-layout>
 				<v-layout>
 					<v-container fluid>
-						<v-layout v-for="(product, index) in items" :key="index" class="item-search" wrap row justify-space-around>
+						<v-layout v-for="(product, index) in items" :key="index" @click="showModalSellItem(product)" class="item-search" wrap row justify-space-around>
 							<v-layout pl-2 column justify-center>
 								<v-flex class="text-center"><b>Nome</b></v-flex>
 								<v-flex class="text-center">{{product.productName}}</v-flex>
@@ -96,18 +96,28 @@
 			</v-layout>
 		</v-container>
 	</div>
+	<ModalSellItem 
+		@closeModal="sellItemOn = !sellItemOn"
+		v-if="sellItemOn"
+		:item="itemSellSelected"/>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import ModalSellItem from './ModalSellItem.vue'
 export default {
 	name: 'Dashboard',
+	components: {
+		ModalSellItem
+	},
 	data () {
 		return {
 			searchOn: false,
 			productName: null,
-			items: []
+			items: [],
+			itemSellSelected: {},
+			sellItemOn: false
 		}
 	},
 	methods: {
@@ -130,6 +140,11 @@ export default {
 					this.setLoading(false)
 					this.$message(err.response.data)
 				})
+		},
+		showModalSellItem (product) {
+			console.log(product)
+			this.itemSellSelected = {...product}
+			this.sellItemOn = true
 		}
 	}
 }

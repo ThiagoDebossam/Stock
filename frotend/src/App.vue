@@ -52,6 +52,7 @@ export default {
 			this.$http.post('/token', this.userSession)
 				.then(() => {
 					this.setLoading(false)
+					this.$http.defaults.headers.common['Authorization'] = 'bearer ' + this.userSession.token
 					this.setLogin(true)
 					if (this.$route.path != '/') this.$router.push({path: '/'})
 				})
