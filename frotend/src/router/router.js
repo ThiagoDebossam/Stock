@@ -2,10 +2,15 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/login/Login'
 import Dashboard from '../components/dashboard/Dashboard'
+import ItemList from '../components/items/ItemList'
 
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path: '*',
+        component: Dashboard
+    },
     {
         name: 'login',
         path: '/login',
@@ -15,6 +20,11 @@ const routes = [
         name: 'dashboard',
         path: '/',
         component: Dashboard
+    },
+    {
+        name: 'items',
+        path: '/items',
+        component: ItemList
     }
 ]
 

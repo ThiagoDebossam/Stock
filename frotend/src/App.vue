@@ -54,7 +54,7 @@ export default {
 					this.setLoading(false)
 					this.$http.defaults.headers.common['Authorization'] = 'bearer ' + this.userSession.token
 					this.setLogin(true)
-					if (this.$route.path != '/') this.$router.push({path: '/'})
+					// this.$router.push({path: this.$route.path})
 				})
 				.catch(err => {
 					this.setLoading(false)
