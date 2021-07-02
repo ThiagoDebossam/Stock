@@ -48,11 +48,11 @@ const getItems = (app, res, req) => {
     let where = req.body.productName ?  `WHERE product_name LIKE '%${req.body.productName}%'` : ''
     let query = `
         SELECT
-            id_item AS idItem
-            , item_id_products AS itemIdProducts
-            , product_id AS productId
-            , product_name AS productName
-            , quantity AS quantity
+            id_item AS itemId
+            , item_id_products AS itemIdProduct
+            , product_id AS itemProductId
+            , product_name AS itemProductName
+            , quantity AS itemQuantity
         FROM items
 	    INNER JOIN products ON product_id = item_id_products
         ${where}
