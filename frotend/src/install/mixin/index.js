@@ -1,5 +1,6 @@
 import toasted from 'vue-toasted'
 import Vue from 'vue'
+import state from '../vuex/state'
 Vue.use(toasted, {
     iconPack: 'fontawesome',
     duration: 3000
@@ -22,6 +23,9 @@ Vue.mixin({
             } else if (type === 'success'){
                 Vue.toasted.global.defaultSuccess({ msg: mensagem })
             }
+        },
+        $setLoading (payload) {
+            state.loading = payload
         }
     }
 })

@@ -9,16 +9,17 @@
 						</v-layout>
 						<hr class="line-divider">
 						<v-text-field
-							class="mt-3"
-							label="email *"
+							class="mt-3 required-field"
+							label="email"
 							:rules="rules"
 							type="email"
 							v-model="payload.email"
 							outlined
 						></v-text-field>
 						<v-text-field
-							label="senha *"
+							label="senha"
 							type="password"
+							class="required-field"
 							:rules="rules"
 							v-model="payload.password"
 							outlined

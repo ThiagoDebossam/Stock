@@ -6,6 +6,13 @@ body {
     cursor: pointer;
 }
 
+.field-requried {
+    label::after {
+        content: ' *';
+        color: red
+    }
+}
+
 .login {
     background: linear-gradient(#304352, #d7d2cc) !important;
 }

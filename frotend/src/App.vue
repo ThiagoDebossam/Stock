@@ -5,7 +5,7 @@
 			<Header @toggleMenu="drawer = !drawer" v-if="isLogged" />
 			<Menu v-if="drawer" @toggleMenu="drawer = !drawer" :group="group"/>		
 			<moon-loader :loading="loading" :color="'#337ab7'" :size="'100px'"></moon-loader>
-			<router-view>
+			<router-view v-if="tokenRequest">
 			</router-view>
 		</template>
 	</v-app>
@@ -26,7 +26,8 @@ export default {
 		return {
 			userSession: {},
 			drawer: false,
-			group: null
+			group: null,
+			tokenRequest: true
 		}
 	},
 	computed: {
@@ -49,11 +50,13 @@ export default {
 			this.userSession = false
 		}
 		if (this.userSession) {
+			this.tokenRequest = false
 			this.$http.post('/token', this.userSession)
 				.then(() => {
 					this.setLoading(false)
 					this.$http.defaults.headers.common['Authorization'] = 'bearer ' + this.userSession.token
 					this.setLogin(true)
+					this.tokenRequest = true
 					// this.$router.push({path: this.$route.path})
 				})
 				.catch(err => {
