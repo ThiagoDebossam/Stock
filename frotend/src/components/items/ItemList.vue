@@ -22,6 +22,12 @@
 				</v-btn>
 			</v-layout>
 		</v-container>
+		<modal-delete
+			@closeModal="deleteModal = false"
+			:cancelDelete="cancelDelete"
+			:confirmDelete="confirmDelete"
+			v-if="deleteModal"
+		/>
 	</div>
 </template>
 
@@ -44,14 +50,15 @@ export default {
 			itemsList: [],
 			// PROPS DE MODAL
 			showModalForm: false,
-			payload: {}
+			payload: {},
+			deleteModal: false,
+			itemDelete: {}
 		}
 	},
 	mounted () {
 		this.getItems()
 	},
 	methods: {
-		// CRIAR MENSAGEM GLOBAL EM MODAL PARA CONFIRMAÇÃO DE DELETE
 		getItems () {
 			this.$setLoading(true)
 			this.$http.post('itemsSearch')
@@ -80,9 +87,14 @@ export default {
 			this.showModalForm = !this.showModalForm
 		},
 		deleteItem (item) {
+			this.itemDelete = {...item}
+			this.deleteModal = true
+		},
+		confirmDelete () {
 			this.$setLoading(true)
-			this.$http.post('itemDelete', item)
+			this.$http.post('itemDelete', this.itemDelete)
 				.then(response => {
+					this.deleteModal = false
 					this.$setLoading(false)
 					this.$message(response.data, 'success')
 					this.getItems()
@@ -91,6 +103,10 @@ export default {
 					this.$setLoading(false)
 					this.$message(err.response.data)
 				})
+		},
+		cancelDelete () {
+			this.itemDelete = {}
+			this.deleteModal = false
 		}
 	}
 }
