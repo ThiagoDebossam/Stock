@@ -17,6 +17,10 @@ module.exports = app => {
         .post(app.api.items.controller.itemController.save)
         .get(app.api.items.controller.itemController.getItems)
         .delete(app.api.items.controller.itemController.remove)
+
+    app.route('/itemDelete')
+        .all(app.config.passport.authenticate())
+        .post(app.api.items.controller.itemController.remove)
         
     app.route('/itemsSearch')
         .all(app.config.passport.authenticate())
@@ -27,4 +31,12 @@ module.exports = app => {
         .post(app.api.products.controller.productController.save)
         .get(app.api.products.controller.productController.getProducts)
         .delete(app.api.products.controller.productController.remove)
+
+    app.route('/productDelete')
+        .all(app.config.passport.authenticate())
+        .post(app.api.products.controller.productController.remove)
+
+    app.route('/getProductsById')
+        .all(app.config.passport.authenticate())
+        .post(app.api.products.controller.productController.getProducts)
 }
