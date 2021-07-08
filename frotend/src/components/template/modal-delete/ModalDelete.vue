@@ -2,7 +2,7 @@
     <v-dialog persistent v-model="showModal" width="40%">
         <v-card id="ModalDelete">
             <v-layout class="title" align-center justify-space-between>
-                <v-card-title>Deletar</v-card-title>
+                <v-card-title>Exclusão</v-card-title>
                 <v-icon @click="$emit('closeModal')" class="icon-close">close</v-icon>
             </v-layout>
             <v-container class="content" fluid>

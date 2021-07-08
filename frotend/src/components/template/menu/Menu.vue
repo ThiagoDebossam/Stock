@@ -6,11 +6,11 @@
         temporary>
         <v-list nav dense>
             <v-list-item-group>
-                <v-list-item @click="$router.push({path: '/items'})" class="d-flex justify-center align-center">
+                <v-list-item @click="$route.path != '/items' ? $router.push({path: '/items'}) : ''" class="d-flex justify-center align-center">
                     <v-list-item-title class="title-list"><v-icon>category</v-icon> Itens do estoque</v-list-item-title>
                 </v-list-item>
 
-                <v-list-item>
+                <v-list-item @click="$route.path != '/products' ? $router.push({path: '/products'}) : ''" class="d-flex justify-center align-center">
                     <v-list-item-title class="title-list"><v-icon>production_quantity_limits</v-icon> Produtos</v-list-item-title>
                 </v-list-item>
 
@@ -44,4 +44,4 @@ export default {
 }
 </script>
 
-<style lang="scss">@import "./Menu.scss"</style>
+<style lang="sass">@import "./Menu.scss"</style>

@@ -77,7 +77,7 @@
 					</v-card>
 				</v-flex>
 				<v-flex xs12 sm12 md4 lg4 xlg4>
-					<v-card class="item-card">
+					<v-card @click="$router.push({path: '/products'})" class="item-card">
 						<v-layout class="card-title" white--text justify-center>
 							<v-card-title>Produtos</v-card-title>
 						</v-layout>

@@ -1,7 +1,7 @@
 <template>
 	<div id="Item">
 
-		<ItemsListFilter
+		<ProductsFilter
 			v-if="showFilter"	
 			@closeFilter="showFilter = !showFilter"
 			@sendFilter="sendFilter"
@@ -9,12 +9,12 @@
 
 		<list-table 
 			:headers="headers"
-			:itemsTable="itemsList"
+			:itemsTable="productsList"
+			:callback="validationButtons"
 			@onEditItem="editItem"
 			@onDeleteItem="deleteItem"
 		/>
-		<ModalItemsForm
-			:itemsList="itemsList"
+		<ModalProductsForm
 			@closeModal="closeModal"
 			v-if="showModalForm"
 			:payload="payload"
@@ -47,23 +47,22 @@
 
 <script>
 import ListTable from '../template/list-table/ListTable.vue'
-import ItemsListFilter from './ItemsListFilter.vue'
-import ModalItemsForm from './modal-form/ModalItemsForm.vue'
+import ProductsFilter from './ProductsFilter.vue'
+import ModalProductsForm from './modal-form/ModalProductsForm.vue'
 export default {
-  components: { 
+	name: 'Productslist',
+	components: { 
 		ListTable,
-		ModalItemsForm,
-		ItemsListFilter
+		ModalProductsForm,
+		ProductsFilter
 	},
-    name: 'ItemList',
 	data () {
 		return {
 			headers: [
-				{ text: 'Item', align: 'center', value: 'itemProductName'},
-				{ text: 'Quantidade', align: 'center', value: 'itemQuantity'},
+				{ text: 'Produto', align: 'left', value: 'productName'},
 				{ text: 'Ações', align: 'right', value: 'actions', sortable: false, edit: true }
 			],
-			itemsList: [],
+			productsList: [],
 			// PROPS DE FILTRO
 			showFilter: false,
 			filter: {},
@@ -71,19 +70,19 @@ export default {
 			showModalForm: false,
 			payload: {},
 			deleteModal: false,
-			itemDelete: {}
+			productDelete: {}
 		}
 	},
 	mounted () {
-		this.searchItems()
+		this.searchProducts()
 	},
 	methods: {
-		searchItems () {
+		searchProducts () {
 			this.$setLoading(true)
-			this.$http.post('itemsSearch', this.filter)
+			this.$http.post('getProductsById', this.filter)
 				.then(res => {
 					this.$setLoading(false)
-					this.itemsList = res.data
+					this.productsList = res.data
 				})
 				.catch(err =>{
 					this.setLoading(false)
@@ -97,7 +96,7 @@ export default {
 		closeModal (value) {
 			this.payload = {}
 			if (value && value.add) {
-				this.searchItems()
+				this.searchProducts()
 			}
 			this.showModalForm = !this.showModalForm
 		},
@@ -106,36 +105,42 @@ export default {
 			this.showModalForm = !this.showModalForm
 		},
 		deleteItem (item) {
-			this.itemDelete = {...item}
+			this.productDelete = {...item}
 			this.deleteModal = true
 		},
 		confirmDelete () {
 			this.$setLoading(true)
-			this.$http.post('itemDelete', this.itemDelete)
+			this.$http.post('productDelete', this.productDelete)
 				.then(response => {
 					this.deleteModal = false
 					this.$setLoading(false)
 					this.$message(response.data, 'success')
-					this.searchItems()
+					this.searchProducts()
 				})
 				.catch(err =>{
+					this.deleteModal = false
 					this.$setLoading(false)
 					this.$message(err.response.data)
 				})
 		},
 		cancelDelete () {
-			this.itemDelete = {}
+			this.productDelete = {}
 			this.deleteModal = false
 		},
 		clearFilter () {
 			this.filter = {}
-			this.searchItems()
+			this.searchProducts()
 		},
 		sendFilter (filter) {
 			this.filter = {...filter}
-			this.searchItems()
+			this.searchProducts()
+		},
+		validationButtons (item, btn) {
+			let ok = true
+			if (btn === 'mdi-pencil') ok = false
+			return ok
 		}
 	}
 }
 </script>
-<style lang="sass">@import "./Item.scss"</style>
+<style lang="sass">@import "./Products.scss"</style>

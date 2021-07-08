@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../components/login/Login'
 import Dashboard from '../components/dashboard/Dashboard'
 import ItemList from '../components/items/ItemList'
+import ProductsList from '../components/products/ProductsList'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,11 @@ const routes = [
         name: 'items',
         path: '/items',
         component: ItemList
+    },
+    {
+        name: 'products',
+        path: '/products',
+        component: ProductsList
     }
 ]
 
