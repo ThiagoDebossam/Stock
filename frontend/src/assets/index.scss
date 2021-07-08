@@ -1,0 +1,35 @@
+body {
+    font-family: sans-serif;
+}
+
+.icon-close {
+    cursor: pointer;
+}
+
+.field-requried {
+    label::after {
+        content: ' *';
+        color: red
+    }
+}
+
+.login {
+    background: linear-gradient(#304352, #d7d2cc) !important;
+}
+.index {
+    background: #fff !important;
+}
+
+.v-spinner {
+    position: fixed;
+    background-color: #000;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.5;
+    z-index: 9999;
+    .v-moon {
+        margin: 20% auto;
+    }
+}

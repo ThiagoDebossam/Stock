@@ -1,0 +1,11 @@
+#Menu {
+    .title-list {
+        display: flex;
+        align-items: center;
+        font-size: 15px;
+        i {
+            padding-right: 10px;
+            padding-bottom: 5px;
+        }
+    }
+}
