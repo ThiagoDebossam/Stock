@@ -1,0 +1,17 @@
+#ModalUserForm {
+    overflow: hidden;
+    .title {
+        padding: 5px !important;
+        width: 100%;
+        background: darkblue;
+        color: white;
+        height: 60px;
+        .icon-close {
+            color: white;
+        }
+    }
+
+    .content {
+        padding: 25px;
+    }
+}

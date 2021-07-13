@@ -19,6 +19,17 @@
                     :placeholder="field.placeholder || ''"
                     :label="field.label">
                 ></v-combobox>
+                <v-select
+                    v-if="field.type === 'select'"
+                    outlined
+                    :item-value="field.itemId"
+                    :item-text="field.itemText"
+                    v-model="payload[field.value]"
+                    :items="field.items || []"
+                    :placeholder="field.placeholder || ''"
+                    clearable
+                    :label="field.label">
+                ></v-select>
             </v-flex>
         </v-layout>
         <v-layout justify-end pr-4 mr-5>

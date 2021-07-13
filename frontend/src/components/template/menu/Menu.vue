@@ -6,6 +6,10 @@
         temporary>
         <v-list nav dense>
             <v-list-item-group>
+                <v-list-item v-if="userSession.user_id_prof === 1" @click="$route.path != '/users' ? $router.push({path: '/users'}) : ''" class="d-flex justify-center align-center">
+                    <v-list-item-title class="title-list"><v-icon>group_add</v-icon> Usuários</v-list-item-title>
+                </v-list-item>
+                
                 <v-list-item @click="$route.path != '/items' ? $router.push({path: '/items'}) : ''" class="d-flex justify-center align-center">
                     <v-list-item-title class="title-list"><v-icon>category</v-icon> Itens do estoque</v-list-item-title>
                 </v-list-item>
@@ -14,13 +18,10 @@
                     <v-list-item-title class="title-list"><v-icon>production_quantity_limits</v-icon> Produtos</v-list-item-title>
                 </v-list-item>
 
-                <v-list-item>
-                    <v-list-item-title class="title-list"><v-icon>group_add</v-icon> Usuários</v-list-item-title>
-                </v-list-item>
 
-                <v-list-item>
+                <!-- <v-list-item>
                     <v-list-item-title class="title-list"><v-icon>track_changes</v-icon> Outros</v-list-item-title>
-                </v-list-item>
+                </v-list-item> -->
             </v-list-item-group>
         </v-list>
     </v-navigation-drawer>
@@ -31,7 +32,8 @@ export default {
     name: 'Menu',
     data () {
         return {
-            showMenu: true
+            showMenu: true,
+            userSession: {}
         }
     },
     watch: {
@@ -40,6 +42,9 @@ export default {
                 this.$emit('toggleMenu')
             }
         }
+    },
+    mounted () {
+        this.userSession = JSON.parse(sessionStorage.getItem('_session'))
     }
 }
 </script>
