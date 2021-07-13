@@ -11,7 +11,6 @@ module.exports = app => {
 
     const strategy = new Strategy(params, (payload, done) => {
         app.db.query(`SELECT * FROM users WHERE id = '${payload.id}' LIMIT 1`, (err, result) => {
-            console.log(result, 'passport')
             if (result) {
                 done(null, {...payload})
             } else {

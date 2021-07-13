@@ -23,6 +23,7 @@ const update = async (app, res, user) => {
     `
     app.db.query(query, (err, result)=> {
         if (err) {
+            if (err.code === 'ER_DUP_ENTRY') err = 'Esse email já está em uso. Por favor, digite outro!'
             return res.status(500).send(err)
         }
         res.status(200).send('Usuário editado com sucesso!')
@@ -44,12 +45,15 @@ const remove = (app, res, id) => {
 }
 
 const getUsers = (app, req, res) => {
+    let where = 'WHERE deletedAt IS NULL'
+    where += req.body.name          ? ` AND name         LIKE '%${req.body.name}%'`         : ''
+    where += req.body.user_id_prof  ? ` AND user_id_prof = ${req.body.user_id_prof}`        : ''
     let query = `
-        SELECT
-        id, name, email, user_id_prof
-        FROM users
-        INNER JOIN profile ON prof_id = user_id_prof
-        WHERE deletedAt IS NULL
+    SELECT
+    id AS userId, name, email, user_id_prof
+    FROM users
+    INNER JOIN profile ON prof_id = user_id_prof
+    ${where}
     `
     app.db.query(query, (err, result) => {
         if (err) {

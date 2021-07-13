@@ -8,6 +8,14 @@ module.exports = app => {
         .delete(app.api.user.controller.userController.remove)
         .get(app.api.user.controller.userController.getUsers)
 
+    app.route('/searchUser')
+        .all(app.config.passport.authenticate())
+        .post(app.api.user.controller.userController.getUsers)
+
+    app.route('/userDelete')
+        .all(app.config.passport.authenticate())
+        .post(app.api.user.controller.userController.remove)
+
     app.route('/profiles')
         .all(app.config.passport.authenticate())
         .get(app.api.profile.controller.profileController.getProfiles)
